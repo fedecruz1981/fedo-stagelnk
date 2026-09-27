@@ -1,0 +1,9 @@
+<Application x:Class="Fedo.StageLnk.Server.Gui.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             ShutdownMode="OnMainWindowClose">
+    <!-- ============================================================================
+         Fedo-StageLnk v1.0 — fedo-soft · Archivo: App
+         © 2026 fedo-soft. Todos los derechos reservados.
+         ============================================================================ -->
+</Application>

@@ -1,0 +1,18 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <ItemGroup>
+    <ProjectReference Include="..\Fedo.StageLnk.Protocol\Fedo.StageLnk.Protocol.csproj" />
+    <ProjectReference Include="..\Fedo.StageLnk.Server\Fedo.StageLnk.Server.csproj" />
+  </ItemGroup>
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net8.0-windows</TargetFramework>
+    <UseWPF>true</UseWPF>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <RootNamespace>Fedo.StageLnk.Server.Gui</RootNamespace>
+    <ApplicationIcon>..\..\assets\fedostagelnk.ico</ApplicationIcon>
+  </PropertyGroup>
+
+</Project>

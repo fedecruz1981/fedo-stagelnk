@@ -1,0 +1,20 @@
+# Build artifacts
+bin/
+obj/
+
+# IDE
+.vs/
+*.user
+*.suo
+
+# Local runtime data (no se publican: bibliotecas locales de servidor/cliente)
+Library/
+Demo/
+
+# Sincronización / carteles locales
+.sync/
+.text/
+*.part
+
+# Logs
+*.log

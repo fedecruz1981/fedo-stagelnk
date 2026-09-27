@@ -1,0 +1,345 @@
+<Window x:Class="Fedo.StageLnk.Server.Gui.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Fedo-StageLnk · Panel de Operador"
+        Height="780" Width="1220" MinHeight="620" MinWidth="1000"
+        WindowStartupLocation="CenterScreen"
+        FontFamily="Segoe UI" Background="#1B1B24" Foreground="#EAEAEA">
+    <!-- ============================================================================
+         Fedo-StageLnk v1.0 — fedo-soft · Archivo: MainWindow
+         © 2026 fedo-soft. Todos los derechos reservados.
+         ============================================================================ -->
+
+    <Window.Resources>
+        <SolidColorBrush x:Key="Accent" Color="#FFD700"/>
+        <SolidColorBrush x:Key="AccentDark" Color="#B8860B"/>
+        <SolidColorBrush x:Key="Text" Color="#EAEAEA"/>
+        <SolidColorBrush x:Key="TextDim" Color="#9A9AA8"/>
+        <SolidColorBrush x:Key="Danger" Color="#E04848"/>
+        <SolidColorBrush x:Key="Ok" Color="#4CBB6C"/>
+        <SolidColorBrush x:Key="Info" Color="#5AC8FA"/>
+        <SolidColorBrush x:Key="Warning" Color="#FFA500"/>
+
+        <Style x:Key="Panel" TargetType="Border">
+            <Setter Property="Background" Value="#262633"/>
+        </Style>
+
+        <Style x:Key="SectionTitle" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="13"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Foreground" Value="{StaticResource Accent}"/>
+            <Setter Property="Margin" Value="0,0,0,6"/>
+        </Style>
+
+        <Style x:Key="TransportButton" TargetType="Button">
+            <Setter Property="Background" Value="#33334A"/>
+            <Setter Property="Foreground" Value="{StaticResource Text}"/>
+            <Setter Property="BorderBrush" Value="#46465E"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Padding" Value="14,7"/>
+            <Setter Property="FontSize" Value="13"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="bd" Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                CornerRadius="5" Padding="{TemplateBinding Padding}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="bd" Property="Background" Value="#3D3D58"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="bd" Property="Background" Value="#26262F"/>
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter TargetName="bd" Property="Opacity" Value="0.4"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="AccentButton" TargetType="Button" BasedOn="{StaticResource TransportButton}">
+            <Setter Property="Background" Value="{StaticResource AccentDark}"/>
+            <Setter Property="BorderBrush" Value="#FFD700"/>
+            <Setter Property="Foreground" Value="#111111"/>
+        </Style>
+
+        <Style x:Key="DangerButton" TargetType="Button" BasedOn="{StaticResource TransportButton}">
+            <Setter Property="Background" Value="#6E2A2A"/>
+            <Setter Property="BorderBrush" Value="#E04848"/>
+        </Style>
+
+        <Style x:Key="PanelTextBox" TargetType="TextBox">
+            <Setter Property="Background" Value="#1A1A26"/>
+            <Setter Property="Foreground" Value="{StaticResource Text}"/>
+            <Setter Property="BorderBrush" Value="#333344"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Padding" Value="8,5"/>
+            <Setter Property="CaretBrush" Value="{StaticResource Accent}"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+        </Style>
+
+        <Style x:Key="PanelComboBox" TargetType="ComboBox">
+            <Setter Property="Background" Value="#1A1A26"/>
+            <Setter Property="Foreground" Value="{StaticResource Text}"/>
+            <Setter Property="BorderBrush" Value="#333344"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Padding" Value="6,4"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+        </Style>
+
+        <Style TargetType="DataGrid">
+            <Setter Property="Background" Value="#232330"/>
+            <Setter Property="Foreground" Value="{StaticResource Text}"/>
+            <Setter Property="RowBackground" Value="#262633"/>
+            <Setter Property="AlternatingRowBackground" Value="#22222E"/>
+            <Setter Property="BorderBrush" Value="#333344"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="GridLinesVisibility" Value="Horizontal"/>
+            <Setter Property="HorizontalGridLinesBrush" Value="#333344"/>
+            <Setter Property="HeadersVisibility" Value="Column"/>
+            <Setter Property="AutoGenerateColumns" Value="False"/>
+            <Setter Property="CanUserAddRows" Value="False"/>
+            <Setter Property="CanUserDeleteRows" Value="False"/>
+            <Setter Property="CanUserResizeRows" Value="False"/>
+            <Setter Property="SelectionMode" Value="Single"/>
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="ColumnHeaderStyle">
+                <Setter.Value>
+                    <Style TargetType="DataGridColumnHeader">
+                        <Setter Property="Background" Value="#33334A"/>
+                        <Setter Property="Foreground" Value="{StaticResource Accent}"/>
+                        <Setter Property="FontWeight" Value="SemiBold"/>
+                        <Setter Property="BorderBrush" Value="#3D3D55"/>
+                        <Setter Property="BorderThickness" Value="0,0,1,1"/>
+                        <Setter Property="Padding" Value="6,5"/>
+                    </Style>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="CellStyle">
+                <Setter.Value>
+                    <Style TargetType="DataGridCell">
+                        <Setter Property="BorderThickness" Value="0"/>
+                        <Setter Property="Padding" Value="4,2"/>
+                        <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+                    </Style>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="RowStyle">
+                <Setter.Value>
+                    <Style TargetType="DataGridRow">
+                        <Setter Property="Cursor" Value="Hand"/>
+                        <Style.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#3A3A55"/>
+                            </Trigger>
+                            <Trigger Property="IsSelected" Value="True">
+                                <Setter Property="Background" Value="#B8860B"/>
+                                <Setter Property="Foreground" Value="#111111"/>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="150"/>
+        </Grid.RowDefinitions>
+
+        <!-- Cabecera -->
+        <Border Grid.Row="0" CornerRadius="8" Background="#22222E" BorderBrush="#333344" BorderThickness="1" Padding="12,8" Margin="0,0,0,8">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <StackPanel>
+                    <TextBlock FontSize="18" FontWeight="Bold">
+                        <Run Text="FEDO-STAGELNK" Foreground="{StaticResource Accent}"/>
+                        <Run Text=" · Panel de Operador"/>
+                    </TextBlock>
+                    <TextBlock x:Name="ServerStatus" Foreground="{StaticResource TextDim}" FontSize="12" Margin="0,4,0,0"/>
+                </StackPanel>
+                <StackPanel Grid.Column="1" HorizontalAlignment="Right">
+                    <TextBlock x:Name="ClientsBadge" Foreground="{StaticResource Ok}" FontSize="14" FontWeight="Bold" HorizontalAlignment="Right"/>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,4,0,0">
+                        <TextBlock x:Name="LibraryBadge" Foreground="{StaticResource TextDim}" FontSize="12" VerticalAlignment="Center"/>
+                        <Button Content="CARGAR MEDIOS…" Style="{StaticResource TransportButton}" Margin="10,0,0,0" Padding="10,3" FontSize="11" Click="ImportMedia_Click" ToolTip="Importa archivos de audio/vídeo/imagen a la biblioteca; los clientes los descargan automáticamente"/>
+                    </StackPanel>
+                </StackPanel>
+            </Grid>
+        </Border>
+
+        <!-- Proyecto -->
+        <Border Grid.Row="1" Style="{StaticResource Panel}" CornerRadius="8" BorderBrush="#333344" BorderThickness="1" Padding="10,7" Margin="0,0,0,8">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Text="PROYECTO" Foreground="{StaticResource Accent}" FontWeight="SemiBold" VerticalAlignment="Center" Margin="0,0,8,0"/>
+                <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center">
+                    <TextBlock x:Name="ProjectNameLabel" Foreground="{StaticResource Text}" FontWeight="SemiBold" VerticalAlignment="Center"/>
+                    <TextBlock x:Name="ProjectDirtyStar" Text=" *" Foreground="{StaticResource Warning}" FontWeight="Bold" VerticalAlignment="Center" Visibility="Collapsed"/>
+                    <TextBlock x:Name="ProjectPathLabel" Foreground="{StaticResource TextDim}" FontSize="11" VerticalAlignment="Center" Margin="8,0,0,0"/>
+                </StackPanel>
+                <Button Grid.Column="2" Content="NUEVO" Style="{StaticResource TransportButton}" Margin="8,0,0,0" Click="ProjectNew_Click" ToolTip="Crea un proyecto nuevo (pregunta si quieres guardar el actual)"/>
+                <Button Grid.Column="3" Content="ABRIR…" Style="{StaticResource TransportButton}" Margin="6,0,0,0" Click="ProjectOpen_Click" ToolTip="Carga un proyecto .stg"/>
+                <Button Grid.Column="4" Content="GUARDAR" Style="{StaticResource AccentButton}" Margin="6,0,0,0" Click="ProjectSave_Click" ToolTip="Guarda el proyecto actual"/>
+                <Button Grid.Column="5" Content="GUARDAR COMO…" Style="{StaticResource TransportButton}" Margin="6,0,0,0" Click="ProjectSaveAs_Click" ToolTip="Guarda el proyecto actual en otra ubicación"/>
+            </Grid>
+        </Border>
+
+        <!-- Transporte -->
+        <Border Grid.Row="2" Style="{StaticResource Panel}" CornerRadius="8" BorderBrush="#333344" BorderThickness="1" Padding="10,8" Margin="0,0,0,8">
+            <WrapPanel>
+                <TextBlock Text="CUE #" Foreground="{StaticResource TextDim}" VerticalAlignment="Center" Margin="0,0,6,0"/>
+                <TextBox x:Name="CueNumberBox" Width="70" TextAlignment="Center" Style="{StaticResource PanelTextBox}" VerticalAlignment="Center" Margin="0,0,8,0"/>
+                <Button Content="▶ PLAY" Style="{StaticResource AccentButton}" Click="Play_Click" ToolTip="Reproduce la cue indicada (o la seleccionada en la lista)"/>
+                <Button Content="■ STOP" Style="{StaticResource DangerButton}" Click="Stop_Click" Margin="6,0,0,0" ToolTip="Detiene la reproducción"/>
+                <Button Content="⏸ PAUSA" Style="{StaticResource TransportButton}" Click="Pause_Click" Margin="6,0,0,0"/>
+                <Button Content="⏵ REANUDAR" Style="{StaticResource TransportButton}" Click="Resume_Click" Margin="6,0,0,0"/>
+                <Button Content="NEXT" Style="{StaticResource TransportButton}" Click="Next_Click" Margin="6,0,0,0"/>
+                <Button Content="PREV" Style="{StaticResource TransportButton}" Click="Prev_Click" Margin="6,0,0,0"/>
+                <Button Content="❄ FREEZE" Style="{StaticResource TransportButton}" Click="Freeze_Click" Margin="6,0,0,0"/>
+                <Button Content="● BLACK" Style="{StaticResource DangerButton}" Click="Black_Click" Margin="6,0,0,0"/>
+                <Button Content="FADE 3s" Style="{StaticResource TransportButton}" Click="Fade_Click" Margin="6,0,0,0"/>
+                <Button Content="FX FFT" Style="{StaticResource AccentButton}" Click="Fx_Click" Margin="6,0,0,0" ToolTip="Abre el visualizador audio-reactivo (FFT) en los clientes"/>
+            </WrapPanel>
+        </Border>
+
+        <!-- Contenido: cues + clientes -->
+        <Grid Grid.Row="3">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="5*"/>
+                <ColumnDefinition Width="10"/>
+                <ColumnDefinition Width="6*"/>
+            </Grid.ColumnDefinitions>
+
+            <!-- Cue list -->
+            <Border Grid.Column="0" Style="{StaticResource Panel}" CornerRadius="8" BorderBrush="#333344" BorderThickness="1" Padding="8">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <TextBlock Text="CUE LIST" Style="{StaticResource SectionTitle}"/>
+                    <DataGrid x:Name="CueGrid" Grid.Row="1" MouseDoubleClick="CueGrid_MouseDoubleClick" IsReadOnly="True">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="#" Binding="{Binding Number}" Width="50"/>
+                            <DataGridTextColumn Header="Nombre" Binding="{Binding Name}" Width="*"/>
+                            <DataGridTextColumn Header="Tipo" Binding="{Binding Kind}" Width="90"/>
+                            <DataGridTextColumn Header="Dur(s)" Binding="{Binding Duration}" Width="65"/>
+                            <DataGridTextColumn Header="Capas" Binding="{Binding Layers}" Width="60"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                    <WrapPanel Grid.Row="2" Margin="0,8,0,0">
+                        <TextBox x:Name="NewCueNumberBox" Width="60" TextAlignment="Center" Style="{StaticResource PanelTextBox}" ToolTip="Número de la nueva cue"/>
+                        <TextBox x:Name="NewCueNameBox" Width="180" Style="{StaticResource PanelTextBox}" Margin="6,0,0,0" ToolTip="Nombre de la nueva cue"/>
+                        <ComboBox x:Name="KindCombo" Width="110" Style="{StaticResource PanelComboBox}" Margin="6,0,0,0"/>
+                        <Button Content="+ Añadir cue" Style="{StaticResource TransportButton}" Margin="6,0,0,0" Click="AddCue_Click"/>
+                        <Button Content="− Eliminar" Style="{StaticResource DangerButton}" Margin="6,0,0,0" Click="DeleteCue_Click" ToolTip="Elimina la cue seleccionada"/>
+                    </WrapPanel>
+                </Grid>
+            </Border>
+
+            <!-- Clientes en vivo -->
+            <Border Grid.Column="2" Style="{StaticResource Panel}" CornerRadius="8" BorderBrush="#333344" BorderThickness="1" Padding="8">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <TextBlock Text="CLIENTES EN VIVO (telemetría 1 s)" Style="{StaticResource SectionTitle}"/>
+                    <DataGrid x:Name="ClientsGrid" Grid.Row="1" IsReadOnly="True">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Cliente" Binding="{Binding Name}" Width="*"/>
+                            <DataGridTextColumn Header="Estado" Binding="{Binding Status}" Width="70"/>
+                            <DataGridTextColumn Header="FPS" Binding="{Binding Fps}" Width="45"/>
+                            <DataGridTextColumn Header="CPU%" Binding="{Binding Cpu}" Width="50"/>
+                            <DataGridTextColumn Header="GPU%" Binding="{Binding GpuUsage}" Width="50"/>
+                            <DataGridTextColumn Header="GPU" Binding="{Binding Gpu}" Width="*"/>
+                            <DataGridTextColumn Header="RAM" Binding="{Binding Ram}" Width="70"/>
+                            <DataGridTextColumn Header="Temp" Binding="{Binding Temp}" Width="55"/>
+                            <DataGridTextColumn Header="Res" Binding="{Binding Resolution}" Width="80"/>
+                            <DataGridTextColumn Header="Cue" Binding="{Binding Cue}" Width="45"/>
+                            <DataGridTextColumn Header="Sync" Binding="{Binding Sync}" Width="65"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </Grid>
+            </Border>
+        </Grid>
+
+        <!-- Cartel de texto + sincronización -->
+        <Border Grid.Row="4" Style="{StaticResource Panel}" CornerRadius="8" BorderBrush="#333344" BorderThickness="1" Padding="10,8" Margin="0,10,0,0">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Text="ANUNCIO" Foreground="{StaticResource Accent}" FontWeight="SemiBold" VerticalAlignment="Center" Margin="0,0,8,0"/>
+                <TextBox x:Name="SignTextBox" Grid.Column="1" Style="{StaticResource PanelTextBox}" ToolTip="Texto del cartel 3D (anuncio)"/>
+                <ComboBox x:Name="ColorCombo" Grid.Column="2" Width="110" Style="{StaticResource PanelComboBox}" Margin="6,0,0,0" ToolTip="Color del cartel">
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal">
+                                <Rectangle Width="14" Height="14" RadiusX="2" RadiusY="2" Fill="{Binding Hex}" Stroke="#555566" StrokeThickness="1" VerticalAlignment="Center" Margin="0,0,6,0"/>
+                                <TextBlock Text="{Binding Name}" VerticalAlignment="Center"/>
+                            </StackPanel>
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                </ComboBox>
+                <Button Grid.Column="3" Content="MOSTRAR CARTEL 3D" Style="{StaticResource AccentButton}" Margin="6,0,0,0" Click="ShowSign_Click"/>
+                <Button Grid.Column="4" Content="Quitar" Style="{StaticResource TransportButton}" Margin="6,0,0,0" Click="Black_Click"/>
+            </Grid>
+        </Border>
+
+        <!-- Log -->
+        <Border Grid.Row="5" Style="{StaticResource Panel}" CornerRadius="8" BorderBrush="#333344" BorderThickness="1" Padding="8" Margin="0,10,0,0">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <DockPanel>
+                    <TextBlock Text="LOG" Style="{StaticResource SectionTitle}" DockPanel.Dock="Left"/>
+                    <Button Content="Limpiar" Style="{StaticResource TransportButton}" DockPanel.Dock="Right" Padding="10,2" FontSize="11" Click="ClearLog_Click"/>
+                </DockPanel>
+                <ListBox x:Name="LogList" Grid.Row="1" Background="#16161F" Foreground="#C9C9D8" BorderBrush="#333344"
+                         BorderThickness="1" FontFamily="Cascadia Mono, Consolas" FontSize="12"
+                         ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                         VirtualizingPanel.IsVirtualizing="False">
+                    <ListBox.ItemContainerStyle>
+                        <Style TargetType="ListBoxItem">
+                            <Setter Property="Focusable" Value="False"/>
+                            <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                        </Style>
+                    </ListBox.ItemContainerStyle>
+                </ListBox>
+            </Grid>
+        </Border>
+    </Grid>
+</Window>
