@@ -2,7 +2,7 @@
 
 ## Descargas
 
-Tres ejecutables para Windows x64, framework-dependent: necesitan el
+**Windows x64 primero** — Tres ejecutables framework-dependent para Windows x64. Requieren el
 [runtime de .NET 8 Desktop](https://dotnet.microsoft.com/download/dotnet/8.0)
 (el panel es WPF; instala el runtime en la cabina y en cada cliente).
 
