@@ -1,9 +1,10 @@
-# Fedo-StageLnk v1.0
+# Fedo-StageLnk v1.0.1
 
 ## Descargas
 
-Tres ejecutables para Windows x64, framework-dependent: necesitan el runtime de
-.NET 8 Desktop (el panel es WPF).
+Tres ejecutables para Windows x64, framework-dependent: necesitan el
+[runtime de .NET 8 Desktop](https://dotnet.microsoft.com/download/dotnet/8.0)
+(el panel es WPF; instala el runtime en la cabina y en cada cliente).
 
 | Versión | Qué es | Tamaño |
 |---------|--------|--------|
@@ -73,7 +74,7 @@ En un espectáculo real, el servidor o el panel van en la cabina y cada cliente 
 que reproduce. Todo el tráfico va por la LAN: **TCP 9001** para sincronizar medios,
 **UDP 9002** para comandos y **HTTP 9003** para streaming por rango.
 
-## Estado actual (v0.8: Sync por HTTP en paralelo y reanudable)
+## Estado actual
 
 - Biblioteca de medios con escaneo, **probe FFmpeg** (duración y resolución reales) y hash SHA-256 por archivo.
 - Sincronización cliente/servidor con verificación de checksum.

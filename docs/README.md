@@ -1,4 +1,4 @@
-# Fedo-StageLnk v1.0
+# Fedo-StageLnk v1.0.1
 
 Sistema profesional cliente/servidor para reproducción multimedia distribuida en espectáculos.
 Desarrollado por **Fedo-Soft** — herramientas hechas por técnicos, para técnicos.
@@ -8,7 +8,7 @@ durante la sincronización y los comandos durante el espectáculo. **Streaming p
 opcional (HTTP + Range)**: si un medio aún no está sincronizado, el cliente lo reproduce
 directamente desde la URL en vez de bloquear el show.
 
-## Estado actual (v0.8: Sync por HTTP en paralelo y reanudable)
+## Estado actual
 
 - Biblioteca de medios con escaneo, **probe FFmpeg** (duración y resolución reales) y hash SHA-256 por archivo.
 - Sincronización cliente/servidor con verificación de checksum.
