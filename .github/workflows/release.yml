@@ -88,7 +88,10 @@ jobs:
           TAG: ${{ inputs.tag || github.ref_name }}
         run: |
           ls -la dist/
+          # Las notas estaticas explican que trae cada zip y se anteponen a las
+          # autogeneradas, para que la pagina de descargas sea util sola.
           gh release create "$TAG" dist/*.zip \
             --verify-tag \
             --generate-notes \
-            --title "$TAG"
+            --title "$TAG" \
+            --notes "Fedo-StageLnk $TAG: tres ejecutables para Windows x64, framework-dependent (necesitan el runtime de .NET 8 Desktop, porque el panel es WPF). El zip \`servidor\` trae \`Fedo.StageLnk.Server.Host.exe\`, el zip \`cliente\` trae \`Fedo.StageLnk.Client.Host.exe\` y el zip \`panel\` trae \`Fedo.StageLnk.Server.Gui.exe\`. Se descomprime y se abre el \`.exe\`; para compilar desde el codigo, ver el README. Esta release se compila sola: cada tag \`v*\` dispara build, los tests, \`dotnet publish\` y los zips."
