@@ -20,6 +20,11 @@ código, ver [Compilar](#compilar).
 Sistema profesional cliente/servidor para reproducción multimedia distribuida en espectáculos.
 Desarrollado por **Fedo-Soft** — herramientas hechas por técnicos, para técnicos.
 
+![Panel de operador de Fedo-StageLnk abierto sobre la biblioteca de demostración, con la grilla de cues y el estado del servidor en la barra inferior](docs/captura.png)
+
+> La captura es del binario que se publica en la release de arriba, corriendo con
+> la biblioteca de ejemplo (`--demo`) que genera la propia app.
+
 Sustituye los cables HDMI largos por una red Ethernet Gigabit: los archivos se transfieren
 durante la sincronización y los comandos durante el espectáculo. **Streaming por LAN
 opcional (HTTP + Range)**: si un medio aún no está sincronizado, el cliente lo reproduce
