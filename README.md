@@ -8,6 +8,49 @@ durante la sincronización y los comandos durante el espectáculo. **Streaming p
 opcional (HTTP + Range)**: si un medio aún no está sincronizado, el cliente lo reproduce
 directamente desde la URL en vez de bloquear el show.
 
+## Quickstart
+
+Dos terminales en la misma máquina, con el SDK de .NET 8 instalado. FFmpeg es
+opcional pero recomendado (`winget install Gyan.FFmpeg`).
+
+```powershell
+git clone https://github.com/fedecruz1981/fedo-stagelnk.git
+cd fedo-stagelnk
+dotnet build Fedo-StageLnk.sln
+```
+
+**Terminal 1 — servidor**, arrancando con una biblioteca demo de un tono:
+
+```powershell
+dotnet run --project src\Fedo.StageLnk.Server.Host -- --demo
+```
+
+**Terminal 2 — cliente**, apuntando a ese servidor:
+
+```powershell
+dotnet run --project src\Fedo.StageLnk.Client.Host -- 127.0.0.1 "Sala Principal"
+```
+
+El cliente sincroniza la biblioteca, queda `READY` y ya recibe comandos.
+Desde la consola del servidor: `play 1`, `stop`, `fade 2`. Desde la del cliente:
+`playfile Intro video.mp4` reproduce un archivo local sin pasar por el servidor.
+
+Para trabajar con el panel de operador en vez de con la consola del servidor:
+
+```powershell
+dotnet run --project src\Fedo.StageLnk.Server.Gui -- --demo
+```
+
+Y para comprobar que todo está sano antes de salir a trabajar:
+
+```powershell
+dotnet test Fedo-StageLnk.sln
+```
+
+En un espectáculo real, el servidor o el panel van en la cabina y cada cliente en la máquina
+que reproduce. Todo el tráfico va por la LAN: **TCP 9001** para sincronizar medios,
+**UDP 9002** para comandos y **HTTP 9003** para streaming por rango.
+
 ## Estado actual (v0.8: Sync por HTTP en paralelo y reanudable)
 
 - Biblioteca de medios con escaneo, **probe FFmpeg** (duración y resolución reales) y hash SHA-256 por archivo.
