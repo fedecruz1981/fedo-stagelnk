@@ -717,6 +717,8 @@ public sealed class StageLnkClient : IAsyncDisposable // Clase sellada del clien
 
     public async ValueTask DisposeAsync() // Libera los recursos del cliente de forma asíncrona.
     {
+        if (_disposed) // Si el cliente ya estaba liberado...
+            return; // ...no hace nada y evita doble liberación.
         _disposed = true; // Marca el cliente como liberado.
         _lifetimeCts.Cancel(); // Cancela los bucles en curso.
         _disconnectTcs?.TrySetResult(); // Despierta el bucle de reconexión para que salga.

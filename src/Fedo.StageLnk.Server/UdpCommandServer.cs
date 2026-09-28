@@ -62,7 +62,16 @@ public sealed class UdpCommandServer : IAsyncDisposable // Servidor UDP con libe
             }
 
             string json = Encoding.UTF8.GetString(result.Buffer); // Convierte los bytes recibidos a texto
-            var message = MessageEnvelope.Deserialize(json); // Deserializa el sobre de mensaje
+            MessageEnvelope? message = null; // Inicializa el mensaje como nulo
+            try // Protege la deserialización ante JSON corrupto
+            {
+                message = MessageEnvelope.Deserialize(json); // Deserializa el sobre de mensaje
+            }
+            catch
+            {
+                // Ignora datagramas con JSON inválido para resistir corrupción
+                continue;
+            }
             if (message is null) // Si el mensaje no es válido
                 continue; // Ignora el datagrama
 
