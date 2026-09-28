@@ -221,6 +221,8 @@ internal sealed class RecordingEngine : IPlaybackEngine
     public ConcurrentQueue<int> PlayedCueNumbers { get; } = new();
     // Cola con los nombres de medio reproducidos
     public ConcurrentQueue<string> PlayedMediaNames { get; } = new();
+    // Cola con los horarios programados recibidos en cada medio reproducido
+    public ConcurrentQueue<DateTimeOffset?> PlayedSchedules { get; } = new();
 
     // Inicializa el motor (no hace nada en pruebas)
     public void Initialize(string mediaRoot) { }
@@ -230,6 +232,8 @@ internal sealed class RecordingEngine : IPlaybackEngine
     {
         // Registra el nombre del medio reproducido
         PlayedMediaNames.Enqueue(asset.Name);
+        // Registra el horario programado que recibió el motor
+        PlayedSchedules.Enqueue(scheduledAtUtc);
         // Dispara el evento de medio reproducido
         MediaPlayed?.Invoke(asset);
     }
