@@ -6,6 +6,7 @@
 
 using System.Diagnostics; // Proporciona el lanzamiento de procesos (ffprobe)
 using System.Text.Json; // Proporciona el análisis de JSON (JsonDocument)
+using Fedo.StageLnk.Shared; // Herramientas externas compartidas (ffmpeg/ffprobe/ffplay)
 
 namespace Fedo.StageLnk.Server; // Espacio de nombres del servidor
 
@@ -23,71 +24,23 @@ public sealed class MediaInfo // Metadatos de un archivo de medio
 /// </summary>
 public static class MediaProbe // Utilidades de sondeo de medios con ffprobe
 {
-    private static readonly object Gate = new(); // Candado para serializar la localización de ffprobe
-    private static string? _ffprobePath; // Ruta del ejecutable de ffprobe (una vez resuelta)
-    private static bool _checked; // Indica si ya se intentó localizar ffprobe
 
     public static bool IsAvailable // Indica si ffprobe está disponible en el sistema
     {
-        get // Getter de la propiedad
-        {
-            Resolve(); // Intenta localizar ffprobe si aún no se hizo
-            return _ffprobePath is not null; // Disponible si se encontró el ejecutable
-        }
+        get => ExternalTools.IsFfprobeAvailable; // Delega en el resolvedor compartido
     }
 
-    private static void Resolve() // Localiza ffprobe (variable de entorno o PATH) una única vez
-    {
-        if (_checked) // Si ya se intentó localizar antes
-            return; // No repite la búsqueda
-
-        lock (Gate) // Serializa el bloque entre hilos
-        {
-            if (_checked) // Doble comprobación dentro del candado
-                return; // Otro hilo ya lo resolvió
-
-            var env = Environment.GetEnvironmentVariable("FEDO_FFPROBE"); // Lee la ruta de la variable de entorno
-            if (!string.IsNullOrEmpty(env) && File.Exists(env)) // Si la variable no está vacía y el archivo existe
-                _ffprobePath = env; // Usa esa ruta explícita
-
-            if (_ffprobePath is null) // Si aún no hay ruta conocida
-            {
-                try // Intenta detectar ffprobe en el PATH del sistema
-                {
-                    // Lanza ffprobe con la opción -version para comprobar si existe
-                    using var proc = Process.Start(new ProcessStartInfo("ffprobe", "-version")
-                    {
-                        UseShellExecute = false, // No usa el shell del sistema
-                        CreateNoWindow = true, // No crea ventana de consola
-                        RedirectStandardOutput = true, // Captura la salida estándar
-                        RedirectStandardError = true // Captura la salida de error
-                    });
-                    if (proc is not null) // Si el proceso se lanzó correctamente
-                    {
-                        proc.StandardOutput.ReadToEnd(); // Consume la salida para evitar bloqueos de buffer
-                        proc.WaitForExit(5000); // Espera hasta 5 segundos a que termine
-                        if (proc.ExitCode == 0) // Si terminó con éxito
-                            _ffprobePath = "ffprobe"; // Usa el comando por su nombre en el PATH
-                    }
-                }
-                catch // Si el lanzamiento falló (ffprobe no está instalado)
-                {
-                    _ffprobePath = null; // Confirma que no hay ffprobe disponible
-                }
-            }
-
-            _checked = true; // Marca la resolución como ya realizada
-        }
-    }
+    public static string? FfprobePath => ExternalTools.FfprobePath; // Ruta resuelta de ffprobe
 
     public static MediaInfo? Probe(string filePath) // Sondea un archivo y devuelve sus metadatos
     {
-        if (!IsAvailable || string.IsNullOrEmpty(_ffprobePath)) // Si no hay ffprobe disponible
+        var ffprobePath = ExternalTools.FfprobePath;
+        if (!ExternalTools.IsFfprobeAvailable || string.IsNullOrEmpty(ffprobePath)) // Si no hay ffprobe disponible
             return null; // No puede sondear
 
         try // Ejecuta ffprobe y captura posibles errores
         {
-            var psi = new ProcessStartInfo(_ffprobePath!) // Prepara la línea de comandos de ffprobe
+            var psi = new ProcessStartInfo(ffprobePath) // Prepara la línea de comandos de ffprobe
             {
                 UseShellExecute = false, // No usa el shell
                 CreateNoWindow = true, // Sin ventana de consola

@@ -14,6 +14,7 @@ using System.Windows.Controls; // controles de WPF (ComboBox, TextBox, etc.)
 using System.Windows.Threading; // Dispatcher para sincronizar con el hilo de la UI
 using Fedo.StageLnk.Protocol; // tipos del protocolo (Cue, CueKind, LayerSpec, etc.)
 using Fedo.StageLnk.Server; // StageLnkServer y clases del servidor
+using Fedo.StageLnk.Shared; // Herramientas externas compartidas (ffmpeg/ffprobe/ffplay)
 using Microsoft.Win32; // diálogos nativos de Windows (OpenFileDialog, SaveFileDialog)
 
 namespace Fedo.StageLnk.Server.Gui; // espacio de nombres de la GUI del servidor
@@ -753,26 +754,7 @@ public static class DemoLibrary // genera una biblioteca de ejemplo si falta
 
     private static bool FfmpegAvailable() // comprueba si ffmpeg está disponible en el sistema
     {
-        try // intenta lanzar ffmpeg
-        {
-            // Arranca ffmpeg -version capturando su salida
-            using var proc = Process.Start(new ProcessStartInfo("ffmpeg", "-version")
-            {
-                UseShellExecute = false, // sin shell
-                CreateNoWindow = true, // sin ventana de consola
-                RedirectStandardOutput = true, // captura la salida estándar
-                RedirectStandardError = true // captura la salida de error
-            });
-            if (proc is null) // si no se pudo iniciar el proceso...
-                return false; // ...ffmpeg no está disponible
-            proc.StandardOutput.ReadToEnd(); // lee la salida para no bloquear el proceso
-            proc.WaitForExit(5000); // espera hasta 5 s al cierre
-            return proc.ExitCode == 0; // disponible si terminó correctamente
-        }
-        catch // si la ejecución lanza una excepción...
-        {
-            return false; // ...se trata como no disponible
-        }
+        return ExternalTools.IsFfmpegAvailable; // Delega en el resolvedor compartido
     }
 
     private static void Run(string exe, params string[] args) // ejecuta un comando externo con argumentos

@@ -2,6 +2,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Fedo.StageLnk.Protocol\Fedo.StageLnk.Protocol.csproj" />
+    <ProjectReference Include="..\Fedo.StageLnk.Shared\Fedo.StageLnk.Shared.csproj" />
   </ItemGroup>
 
   <ItemGroup>

@@ -6,6 +6,7 @@
 
 using System.Diagnostics; // Proporciona Process y ProcessStartInfo para lanzar ffplay
 using System.Globalization; // Formatea números con cultura invariable (p. ej. el offset de -ss)
+using Fedo.StageLnk.Shared; // Herramientas externas compartidas (ffmpeg/ffprobe/ffplay)
 
 namespace Fedo.StageLnk.Client; // Espacio de nombres del cliente Fedo-StageLnk
 
@@ -54,6 +55,12 @@ public sealed class FfplayVideoRenderer : IDisposable
         }
     }
 
+    /// <summary>Indica si ffplay está disponible en el sistema.</summary>
+    public bool IsAvailable // Disponibilidad de ffplay en el sistema
+    {
+        get => ExternalTools.IsFfplayAvailable; // Delega en el resolvedor compartido
+    }
+
     public bool IsPaused
     {
         get
@@ -99,8 +106,15 @@ public sealed class FfplayVideoRenderer : IDisposable
 
         try
         {
+            var ffplayPath = ExternalTools.FfplayPath ?? "ffplay";
+            if (!ExternalTools.IsFfplayAvailable)
+            {
+                Log?.Invoke("Render: ffplay no está disponible en el sistema (variable FEDO_FFPLAY o PATH)");
+                return;
+            }
+
             // Prepara el proceso ffplay
-            var psi = new ProcessStartInfo("ffplay")
+            var psi = new ProcessStartInfo(ffplayPath)
             {
                 // No pasa por el shell del sistema
                 UseShellExecute = false,
@@ -193,8 +207,15 @@ public sealed class FfplayVideoRenderer : IDisposable
     {
         try
         {
+            var ffplayPath = ExternalTools.FfplayPath ?? "ffplay";
+            if (!ExternalTools.IsFfplayAvailable)
+            {
+                Log?.Invoke("Render: ffplay no está disponible en el sistema (variable FEDO_FFPLAY o PATH)");
+                return;
+            }
+
             // Prepara un nuevo proceso ffplay
-            var psi = new ProcessStartInfo("ffplay")
+            var psi = new ProcessStartInfo(ffplayPath)
             {
                 // No pasa por el shell del sistema
                 UseShellExecute = false,

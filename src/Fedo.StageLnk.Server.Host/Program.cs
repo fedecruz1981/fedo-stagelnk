@@ -6,6 +6,7 @@
 
 using Fedo.StageLnk.Protocol;
 using Fedo.StageLnk.Server;
+using Fedo.StageLnk.Shared;
 
 // Banner de presentación del servidor definido como cadena bruta multilínea
 const string Banner = """
@@ -17,6 +18,13 @@ const string Banner = """
 
 Console.OutputEncoding = System.Text.Encoding.UTF8; // la consola usa UTF-8 para mostrar el banner correctamente
 Console.WriteLine(Banner); // imprime el banner de bienvenida
+
+// Diagnóstico de herramientas externas
+var (ffmpeg, ffprobe, ffplay) = ExternalTools.CheckAll();
+Console.WriteLine($"[Diag] ffmpeg: {(ffmpeg ? "OK" : "NO ENCONTRADO")}  ffprobe: {(ffprobe ? "OK" : "NO ENCONTRADO")}  ffplay: {(ffplay ? "OK" : "NO ENCONTRADO")}");
+if (!ffmpeg || !ffprobe || !ffplay)
+    Console.WriteLine("Advertencia: faltan herramientas de FFmpeg. Instale FFmpeg y añádalo al PATH, o defina FEDO_FFMPEG/FEDO_FFPROBE/FEDO_FFPLAY.");
+Console.WriteLine();
 
 // Directorio raíz de la biblioteca: primer argumento sin guion, o la ruta predeterminada si no se indica ninguno
 string libraryRoot = args.FirstOrDefault(a => !a.StartsWith("-")) ?? Path.Combine(Environment.CurrentDirectory, "Library", "Server");

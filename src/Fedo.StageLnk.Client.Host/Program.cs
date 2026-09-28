@@ -8,6 +8,7 @@ using System.IO;
 using System.Text.Json;
 using Fedo.StageLnk.Client;
 using Fedo.StageLnk.Protocol;
+using Fedo.StageLnk.Shared;
 using Fedo.StageLnk.Visualizer;
 
 // Banner de marca que se muestra al arrancar la consola.
@@ -20,6 +21,13 @@ const string Banner = """
 
 Console.OutputEncoding = System.Text.Encoding.UTF8; // Fuerza la consola a UTF-8 para símbolos y acentos.
 Console.WriteLine(Banner); // Muestra el banner de presentación.
+
+// Diagnóstico de herramientas externas
+var (ffmpeg, ffprobe, ffplay) = ExternalTools.CheckAll();
+Console.WriteLine($"[Diag] ffmpeg: {(ffmpeg ? "OK" : "NO ENCONTRADO")}  ffprobe: {(ffprobe ? "OK" : "NO ENCONTRADO")}  ffplay: {(ffplay ? "OK" : "NO ENCONTRADO")}");
+if (!ffmpeg || !ffprobe || !ffplay)
+    Console.WriteLine("Advertencia: faltan herramientas de FFmpeg. Instale FFmpeg y añádalo al PATH, o defina FEDO_FFMPEG/FEDO_FFPROBE/FEDO_FFPLAY.");
+Console.WriteLine();
 
 // Filtra los argumentos de línea de comandos que no empiezan por '-'.
 var positional = args.Where(a => !a.StartsWith("-")).ToArray();
