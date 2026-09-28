@@ -1,5 +1,22 @@
 # Fedo-StageLnk v1.0
 
+## Descargas
+
+Tres ejecutables para Windows x64, framework-dependent: necesitan el runtime de
+.NET 8 Desktop (el panel es WPF).
+
+| Versión | Qué es | Tamaño |
+|---------|--------|--------|
+| [1.0.1](https://github.com/fedecruz1981/fedo-stagelnk/releases/tag/v1.0.1) | `fedo-stagelnk-v1.0.1-servidor.zip` — host de consola del servidor | 0,15 MB |
+| [1.0.1](https://github.com/fedecruz1981/fedo-stagelnk/releases/tag/v1.0.1) | `fedo-stagelnk-v1.0.1-cliente.zip` — host de consola del cliente | 1,84 MB |
+| [1.0.1](https://github.com/fedecruz1981/fedo-stagelnk/releases/tag/v1.0.1) | `fedo-stagelnk-v1.0.1-panel.zip` — panel de operador (WPF) | 0,30 MB |
+
+[Todas las releases](https://github.com/fedecruz1981/fedo-stagelnk/releases) · [reportar un problema](https://github.com/fedecruz1981/fedo-stagelnk/issues)
+
+Se descomprime el zip y se abre el `.exe` del zip que corresponda: `Fedo.StageLnk.Server.Host.exe`,
+`Fedo.StageLnk.Client.Host.exe` o `Fedo.StageLnk.Server.Gui.exe`. Para compilar desde el
+código, ver [Compilar](#compilar).
+
 Sistema profesional cliente/servidor para reproducción multimedia distribuida en espectáculos.
 Desarrollado por **Fedo-Soft** — herramientas hechas por técnicos, para técnicos.
 
@@ -134,7 +151,7 @@ src/
   Fedo.StageLnk.Server.Gui/   Panel de operador (WPF)
   Fedo.StageLnk.Visualizer/   Visualizador FFT reactivo (WPF)
 tests/
-  Fedo.StageLnk.Tests/        Pruebas xUnit (63)
+  Fedo.StageLnk.Tests/        Pruebas xUnit (71)
 assets/
   fedostagelnk.ico            Icono de la aplicación
 docs/
@@ -250,7 +267,7 @@ Batería automatizada con xUnit (`tests\Fedo.StageLnk.Tests`):
 dotnet test Fedo-StageLnk.sln
 ```
 
-Cobertura (63 tests):
+Cobertura (71 tests):
 - **Protocolo**: codec TCP/UDP (roundtrip, prefijo de longitud, rechazo de frames inválidos), camelCase.
 - **Núcleo**: hash SHA-256, `CueList` (next/prev/upsert/orden), `MediaLibrary`, persistencia `.fsl`/`.fslcue`.
 - **Medios**: escáner (hash, kind, rutas relativas), probe ffprobe, `MediaStore`.

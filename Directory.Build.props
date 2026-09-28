@@ -1,0 +1,12 @@
+<Project>
+  <!--
+    Version unica para toda la solucion. El workflow de release la compara
+    con el tag (v*) y no publica si no coinciden, asi que bumping aca es
+    obligatorio para poder publicar.
+  -->
+  <PropertyGroup>
+    <Version>1.0.1</Version>
+    <Company>Fedo-Soft</Company>
+    <Product>Fedo-StageLnk</Product>
+  </PropertyGroup>
+</Project>

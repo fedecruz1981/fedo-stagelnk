@@ -1,0 +1,94 @@
+name: Release
+
+# Publica los tres ejecutables (servidor, cliente y panel) como zip
+# cada vez que se empuja un tag v*. Los binarios son framework-dependent:
+# necesitan el runtime de .NET 8 (Desktop, por el WPF del panel) instalado.
+
+on:
+  push:
+    tags:
+      - 'v*'
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: 'Tag a publicar, por ejemplo v1.1.0'
+        required: true
+
+permissions:
+  contents: write
+
+concurrency:
+  group: release-${{ inputs.tag || github.ref_name }}
+  cancel-in-progress: false
+
+jobs:
+  release:
+    runs-on: windows-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ inputs.tag || github.ref }}
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 8.0.x
+
+      - name: Instalar dependencias
+        run: dotnet restore Fedo-StageLnk.sln
+
+      - name: Verificar que el tag coincide con la version
+        shell: bash
+        env:
+          TAG: ${{ inputs.tag || github.ref_name }}
+        run: |
+          VERSION=$(dotnet msbuild src/Fedo.StageLnk.Server.Host/Fedo.StageLnk.Server.Host.csproj \
+            -getProperty:Version -nologo 2>/dev/null \
+            | tr -d '\r' | grep -Eo '[0-9]+\.[0-9]+\.[0-9]+' | head -n 1)
+          if [ -z "$VERSION" ]; then
+            echo "::error::no se pudo leer la version de Directory.Build.props"
+            exit 1
+          fi
+          if [ "$TAG" != "v$VERSION" ]; then
+            echo "::error::el tag $TAG no coincide con la version $VERSION de Directory.Build.props"
+            exit 1
+          fi
+          echo "Publicando $TAG (version $VERSION)"
+
+      - name: Build
+        run: dotnet build Fedo-StageLnk.sln --configuration Release --no-restore
+
+      - name: Test
+        run: dotnet test Fedo-StageLnk.sln --configuration Release --no-build
+
+      - name: Publicar ejecutables
+        shell: pwsh
+        env:
+          TAG: ${{ inputs.tag || github.ref_name }}
+        run: |
+          $out = "publish"
+          $proyectos = @{
+            "servidor" = "src\Fedo.StageLnk.Server.Host\Fedo.StageLnk.Server.Host.csproj"
+            "cliente"  = "src\Fedo.StageLnk.Client.Host\Fedo.StageLnk.Client.Host.csproj"
+            "panel"    = "src\Fedo.StageLnk.Server.Gui\Fedo.StageLnk.Server.Gui.csproj"
+          }
+          New-Item -ItemType Directory -Force -Path dist | Out-Null
+          foreach ($nombre in $proyectos.Keys) {
+            dotnet publish $proyectos[$nombre] -c Release -r win-x64 --self-contained false -o "$out\$nombre" --nologo
+            if ($LASTEXITCODE -ne 0) { throw "fallo el publish de $nombre" }
+            Compress-Archive -Path "$out\$nombre\*" -DestinationPath "dist\fedo-stagelnk-$env:TAG-$nombre.zip" -Force
+            Write-Host "dist\fedo-stagelnk-$env:TAG-$nombre.zip"
+          }
+
+      - name: Publicar release
+        shell: bash
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          TAG: ${{ inputs.tag || github.ref_name }}
+        run: |
+          ls -la dist/
+          gh release create "$TAG" dist/*.zip \
+            --verify-tag \
+            --generate-notes \
+            --title "$TAG"
