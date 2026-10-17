@@ -127,7 +127,12 @@ del venue: el operador arma la biblioteca y la cue list, el servidor difunde el 
 **TCP 9001**, el cliente descarga lo que le falta por **HTTP 9003** y reporta telemetría por
 **UDP 9002**.
 
-[![Diagrama de arquitectura de Fedo-StageLnk: panel de operador, StageLnkServer con biblioteca y cue list, canales TCP 9001 / UDP 9002 / HTTP 9003, y el cliente con sincronización, almacén local y motor híbrido hacia la pantalla](docs/arquitectura.png)](docs/arquitectura.html)
+<a href="docs/arquitectura.html">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="docs/arquitectura-dark.png">
+    <img src="docs/arquitectura.png" alt="Diagrama de arquitectura de Fedo-StageLnk: panel de operador, StageLnkServer con biblioteca y cue list, canales TCP 9001 / UDP 9002 / HTTP 9003, y el cliente con sincronización, almacén local y motor híbrido hacia la pantalla">
+  </picture>
+</a>
 
 > Diagrama interactivo (zoom, búsqueda, temas claro/oscuro y fuentes por nodo):
 > [docs/arquitectura.html](docs/arquitectura.html). Fuente editable del diagrama:
@@ -159,7 +164,8 @@ assets/
 docs/
   README.md                   Este documento
   PROTOCOLO.md                Especificación del protocolo de red
-  arquitectura.png            Diagrama de arquitectura (imagen)
+  arquitectura.png            Diagrama de arquitectura (imagen, tema claro)
+  arquitectura-dark.png       Diagrama de arquitectura (imagen, tema oscuro)
   arquitectura.html           Diagrama de arquitectura interactivo
   arquitectura.fuente.json    Fuente editable del diagrama
 ```
