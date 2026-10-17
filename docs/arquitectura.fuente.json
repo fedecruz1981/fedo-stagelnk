@@ -1,0 +1,227 @@
+{
+  "schema_version": 1,
+  "diagram_type": "architecture",
+  "meta": {
+    "title": "Fedo-StageLnk — arquitectura de show",
+    "subtitle": "Cabina (servidor) y máquina de reproducción (cliente) sobre la LAN del venue",
+    "locale": "es",
+    "output": ".archify/architecture-fedostagelnk-20261017-203722/fedostagelnk-architecture.html",
+    "visual_preset": "blueprint",
+    "quality_profile": "showcase",
+    "animation": "trace",
+    "repository": {
+      "url": "https://github.com/fedecruz1981/fedo-stagelnk.git",
+      "provider": "github",
+      "link_mode": "web",
+      "revision": "ef88d8267174ae22175e804388808d8d710ed383"
+    },
+    "legend": {
+      "mode": "auto"
+    }
+  },
+  "boundaries": [
+    {
+      "kind": "region",
+      "label": "Cabina — servidor",
+      "wraps": ["operator", "server", "library", "cues", "tcp", "udp", "http"]
+    },
+    {
+      "kind": "region",
+      "label": "Máquina de reproducción — cliente",
+      "wraps": ["client", "sync", "store", "engine", "output"]
+    }
+  ],
+  "components": [
+    {
+      "id": "operator",
+      "type": "frontend",
+      "label": "Panel de operador",
+      "sublabel": "WPF + consola del servidor",
+      "pos": [220, 480],
+      "size": [185, 80],
+      "sources": [
+        { "path": "src/Fedo.StageLnk.Server.Gui/MainWindow.xaml.cs", "line": 22, "end_line": 28, "label": "panel del operador" }
+      ]
+    },
+    {
+      "id": "server",
+      "type": "backend",
+      "label": "StageLnkServer",
+      "sublabel": "orquestador del show",
+      "pos": [220, 335],
+      "size": [185, 92],
+      "sources": [
+        { "path": "src/Fedo.StageLnk.Server/StageLnkServer.cs", "line": 13, "end_line": 19, "label": "orquestación" }
+      ]
+    },
+    {
+      "id": "library",
+      "type": "database",
+      "label": "Biblioteca de medios",
+      "sublabel": "hash SHA-256 + ffprobe",
+      "pos": [45, 115],
+      "size": [155, 78],
+      "sources": [
+        { "path": "src/Fedo.StageLnk.Server/LibraryScanner.cs", "line": 11, "end_line": 15, "label": "escaneo" },
+        { "path": "src/Fedo.StageLnk.Server/MediaLibrary.cs", "line": 11, "end_line": 15, "label": "índice" }
+      ]
+    },
+    {
+      "id": "cues",
+      "type": "database",
+      "label": "Cue list",
+      "sublabel": "proyecto .fsl / .fslcue",
+      "pos": [230, 115],
+      "size": [155, 78],
+      "sources": [
+        { "path": "src/Fedo.StageLnk.Server/CueList.cs", "line": 11, "end_line": 15, "label": "cue list" },
+        { "path": "src/Fedo.StageLnk.Server/ProjectFile.cs", "line": 13, "end_line": 17, "label": "proyecto" }
+      ]
+    },
+    {
+      "id": "tcp",
+      "type": "backend",
+      "label": "TcpSyncServer",
+      "sublabel": "TCP 9001 · sync",
+      "pos": [515, 115],
+      "size": [155, 76],
+      "sources": [
+        { "path": "src/Fedo.StageLnk.Server/TcpSyncServer.cs", "line": 13, "end_line": 18, "label": "canal TCP" }
+      ]
+    },
+    {
+      "id": "udp",
+      "type": "messagebus",
+      "label": "UdpCommandServer",
+      "sublabel": "UDP 9002 · comandos",
+      "pos": [515, 335],
+      "size": [155, 76],
+      "sources": [
+        { "path": "src/Fedo.StageLnk.Server/UdpCommandServer.cs", "line": 15, "end_line": 20, "label": "canal UDP" }
+      ]
+    },
+    {
+      "id": "http",
+      "type": "backend",
+      "label": "MediaHttpServer",
+      "sublabel": "HTTP 9003 · Range",
+      "pos": [515, 555],
+      "size": [155, 76],
+      "sources": [
+        { "path": "src/Fedo.StageLnk.Server/MediaHttpServer.cs", "line": 14, "end_line": 20, "label": "canal HTTP" }
+      ]
+    },
+    {
+      "id": "client",
+      "type": "backend",
+      "label": "StageLnkClient",
+      "sublabel": "cue list + telemetría",
+      "pos": [770, 335],
+      "size": [165, 92],
+      "sources": [
+        { "path": "src/Fedo.StageLnk.Client/StageLnkClient.cs", "line": 11, "end_line": 16, "label": "cliente de show" }
+      ]
+    },
+    {
+      "id": "sync",
+      "type": "backend",
+      "label": "HttpFileDownloader",
+      "sublabel": "rangos + paralelo",
+      "pos": [770, 555],
+      "size": [165, 76],
+      "sources": [
+        { "path": "src/Fedo.StageLnk.Client/HttpFileDownloader.cs", "line": 13, "end_line": 19, "label": "sync HTTP" }
+      ]
+    },
+    {
+      "id": "store",
+      "type": "database",
+      "label": "MediaStore",
+      "sublabel": "disco local + .sync",
+      "pos": [770, 700],
+      "size": [165, 76],
+      "sources": [
+        { "path": "src/Fedo.StageLnk.Client/MediaStore.cs", "line": 11, "end_line": 16, "label": "almacén local" }
+      ]
+    },
+    {
+      "id": "engine",
+      "type": "backend",
+      "label": "HybridEngine",
+      "sublabel": "NAudio + ffplay",
+      "pos": [995, 430],
+      "size": [165, 84],
+      "sources": [
+        { "path": "src/Fedo.StageLnk.Client/HybridEngine.cs", "line": 11, "end_line": 15, "label": "motor híbrido" },
+        { "path": "src/Fedo.StageLnk.Client/NaudioEngine.cs", "line": 12, "label": "motor de audio" },
+        { "path": "src/Fedo.StageLnk.Client/FfplayVideoRenderer.cs", "line": 13, "end_line": 17, "label": "render de vídeo" }
+      ]
+    },
+    {
+      "id": "output",
+      "type": "external",
+      "label": "Pantalla del venue",
+      "sublabel": "audio + vídeo",
+      "pos": [995, 580],
+      "size": [165, 76],
+      "sources": [
+        { "path": "src/Fedo.StageLnk.Client/FfplayVideoRenderer.cs", "line": 13, "end_line": 17, "label": "salida de vídeo" }
+      ]
+    }
+  ],
+  "connections": [
+    { "id": "c_order", "from": "operator", "to": "server", "label": "órdenes de show", "fromSide": "top", "toSide": "bottom" },
+    { "id": "c_scan", "from": "server", "to": "library", "label": "escaneo", "fromSide": "top", "toSide": "bottom" },
+    { "id": "c_cues", "from": "server", "to": "cues", "label": "cue list", "fromSide": "top", "toSide": "bottom" },
+    { "id": "c_tcp", "from": "server", "to": "tcp", "label": "manifiesto", "fromSide": "right", "toSide": "left" },
+    { "id": "c_udp", "from": "server", "to": "udp", "label": "órdenes", "fromSide": "right", "toSide": "left" },
+    { "id": "c_http", "from": "server", "to": "http", "label": "archivos", "fromSide": "right", "toSide": "left" },
+    { "id": "c_hello", "from": "tcp", "to": "client", "label": "Hello", "fromSide": "right", "toSide": "top" },
+    { "id": "c_cmd", "from": "udp", "to": "client", "label": "comandos", "fromSide": "right", "toSide": "left" },
+    { "id": "c_hb", "from": "client", "to": "udp", "label": "heartbeat", "fromSide": "left", "toSide": "right", "variant": "dashed" },
+    { "id": "c_get", "from": "http", "to": "sync", "label": "GET + Range", "fromSide": "right", "toSide": "left" },
+    { "id": "c_dl", "from": "client", "to": "sync", "label": "descarga", "fromSide": "bottom", "toSide": "top" },
+    { "id": "c_write", "from": "sync", "to": "store", "label": "reanuda + SHA-256", "fromSide": "bottom", "toSide": "top" },
+    { "id": "c_read", "from": "store", "to": "engine", "label": "lee", "fromSide": "right", "toSide": "left" },
+    { "id": "c_play", "from": "client", "to": "engine", "label": "PlayCue / stop", "fromSide": "right", "toSide": "top" },
+    { "id": "c_out", "from": "engine", "to": "output", "label": "audio + vídeo", "fromSide": "bottom", "toSide": "top" }
+  ],
+  "cards": [
+    {
+      "dot": "cyan",
+      "title": "Ejecutables",
+      "items": [
+        "Fedo.StageLnk.Server.Host — consola del servidor",
+        "Fedo.StageLnk.Server.Gui — panel WPF del operador",
+        "Fedo.StageLnk.Client.Host — consola del cliente de show"
+      ]
+    },
+    {
+      "dot": "emerald",
+      "title": "FFmpeg externo",
+      "items": [
+        "ffprobe mide duración y resolución al escanear",
+        "ffplay reproduce vídeo y carteles de texto",
+        "ExternalTools.CheckAll() diagnostica al arrancar"
+      ]
+    },
+    {
+      "dot": "violet",
+      "title": "FX audio-reactivo (opcional)",
+      "items": [
+        "ReactiveVisualizer en OpenGL (Silk.NET)",
+        "HybridEngine publica beats y espectro",
+        "Se abre solo con cues de tipo VisualFx"
+      ]
+    },
+    {
+      "dot": "amber",
+      "title": "Pruebas y CI",
+      "items": [
+        "CI en windows-latest: restore, build y test",
+        "73 pruebas xUnit: protocolo, sync HTTP, streaming",
+        "Solución de 8 proyectos (7 de producto + pruebas)"
+      ]
+    }
+  ]
+}

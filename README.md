@@ -122,20 +122,16 @@ que reproduce. Todo el tráfico va por la LAN: **TCP 9001** para sincronizar med
 
 ## Arquitectura
 
-```
-                Ethernet
+Vista general de la cabina (servidor) y de la máquina de reproducción (cliente) sobre la LAN
+del venue: el operador arma la biblioteca y la cue list, el servidor difunde el manifiesto por
+**TCP 9001**, el cliente descarga lo que le falta por **HTTP 9003** y reporta telemetría por
+**UDP 9002**.
 
-   FEDO-STAGELNK SERVER (PC operador / cabina)
-     Biblioteca · Cue List · Sincronización · Administración
-        |                       |
-        +--------+--------------+
-                 |
-        Cliente 1               Cliente 2
-      (Proyector)            (Pantalla LED)
-          | HDMI                  | HDMI
-          |                       |
-       Pantalla               Pantalla
-```
+[![Diagrama de arquitectura de Fedo-StageLnk: panel de operador, StageLnkServer con biblioteca y cue list, canales TCP 9001 / UDP 9002 / HTTP 9003, y el cliente con sincronización, almacén local y motor híbrido hacia la pantalla](docs/arquitectura.png)](docs/arquitectura.html)
+
+> Diagrama interactivo (zoom, búsqueda, temas claro/oscuro y fuentes por nodo):
+> [docs/arquitectura.html](docs/arquitectura.html). Fuente editable del diagrama:
+> [`docs/arquitectura.fuente.json`](docs/arquitectura.fuente.json).
 
 - **TCP 9001** — conexión, manifiesto y confirmaciones de sincronización (frame: 4 bytes longitud + JSON).
 - **UDP 9002** — comandos en vivo, heartbeat y telemetría (datagrama JSON).
@@ -157,12 +153,15 @@ src/
   Fedo.StageLnk.Server.Gui/   Panel de operador (WPF)
   Fedo.StageLnk.Visualizer/   Visualizador FFT reactivo (WPF)
 tests/
-  Fedo.StageLnk.Tests/        Pruebas xUnit (71)
+  Fedo.StageLnk.Tests/        Pruebas xUnit (73)
 assets/
   fedostagelnk.ico            Icono de la aplicación
 docs/
   README.md                   Este documento
   PROTOCOLO.md                Especificación del protocolo de red
+  arquitectura.png            Diagrama de arquitectura (imagen)
+  arquitectura.html           Diagrama de arquitectura interactivo
+  arquitectura.fuente.json    Fuente editable del diagrama
 ```
 
 ## Requisitos
