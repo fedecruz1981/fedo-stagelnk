@@ -5,7 +5,7 @@
     obligatorio para poder publicar.
   -->
   <PropertyGroup>
-    <Version>1.0.1</Version>
+    <Version>1.0.2</Version>
     <Company>Fedo-Soft</Company>
     <Product>Fedo-StageLnk</Product>
   </PropertyGroup>
