@@ -108,7 +108,7 @@ public sealed class LibraryScannerTests
             var results = new LibraryScanner().Scan(dir);
 
             // Localiza el único activo llamado "clip"
-            var clip = Assert.Single(results.Where(a => a.Name == "clip"));
+            var clip = Assert.Single(results, a => a.Name == "clip");
             // La ruta relativa debe conservar la estructura de subdirectorios
             Assert.Equal(Path.Combine("videos", "escena1", "clip.wav"), clip.RelativePath);
         }

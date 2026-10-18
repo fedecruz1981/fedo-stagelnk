@@ -282,7 +282,7 @@ Batería automatizada con xUnit (`tests\Fedo.StageLnk.Tests`):
 dotnet test Fedo-StageLnk.sln
 ```
 
-Cobertura (73 tests):
+Cobertura (71 tests):
 - **Protocolo**: codec TCP/UDP (roundtrip, prefijo de longitud, rechazo de frames inválidos), camelCase.
 - **Núcleo**: hash SHA-256, `CueList` (next/prev/upsert/orden), `MediaLibrary`, persistencia `.fsl`/`.fslcue`.
 - **Medios**: escáner (hash, kind, rutas relativas), probe ffprobe, `MediaStore`.
