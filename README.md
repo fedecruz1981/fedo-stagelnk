@@ -1,4 +1,4 @@
-# Fedo-StageLnk v1.0.1
+# Fedo-StageLnk v1.0.2
 
 ## Descargas
 
@@ -8,9 +8,9 @@
 
 | Versión | Qué es | Tamaño |
 |---------|--------|--------|
-| [1.0.1](https://github.com/fedecruz1981/fedo-stagelnk/releases/tag/v1.0.1) | `fedo-stagelnk-v1.0.1-servidor.zip` — host de consola del servidor | 0,15 MB |
-| [1.0.1](https://github.com/fedecruz1981/fedo-stagelnk/releases/tag/v1.0.1) | `fedo-stagelnk-v1.0.1-cliente.zip` — host de consola del cliente | 1,84 MB |
-| [1.0.1](https://github.com/fedecruz1981/fedo-stagelnk/releases/tag/v1.0.1) | `fedo-stagelnk-v1.0.1-panel.zip` — panel de operador (WPF) | 0,30 MB |
+| [1.0.2](https://github.com/fedecruz1981/fedo-stagelnk/releases/tag/v1.0.2) | `fedo-stagelnk-v1.0.2-servidor.zip` — host de consola del servidor | 0,17 MB |
+| [1.0.2](https://github.com/fedecruz1981/fedo-stagelnk/releases/tag/v1.0.2) | `fedo-stagelnk-v1.0.2-cliente.zip` — host de consola del cliente | 1,90 MB |
+| [1.0.2](https://github.com/fedecruz1981/fedo-stagelnk/releases/tag/v1.0.2) | `fedo-stagelnk-v1.0.2-panel.zip` — panel de operador (WPF) | 0,31 MB |
 
 [Todas las releases](https://github.com/fedecruz1981/fedo-stagelnk/releases) · [reportar un problema](https://github.com/fedecruz1981/fedo-stagelnk/issues)
 
