@@ -282,7 +282,7 @@ Batería automatizada con xUnit (`tests\Fedo.StageLnk.Tests`):
 dotnet test Fedo-StageLnk.sln
 ```
 
-Cobertura (71 tests):
+Cobertura (73 tests):
 - **Protocolo**: codec TCP/UDP (roundtrip, prefijo de longitud, rechazo de frames inválidos), camelCase.
 - **Núcleo**: hash SHA-256, `CueList` (next/prev/upsert/orden), `MediaLibrary`, persistencia `.fsl`/`.fslcue`.
 - **Medios**: escáner (hash, kind, rutas relativas), probe ffprobe, `MediaStore`.
@@ -304,4 +304,19 @@ Cobertura (71 tests):
 - v0.8 Visual FX GPU: partículas y shaders GLSL alimentados por los eventos de beat/espectro.
 - v1.0 Release. v2.0 Node editor, DMX, OSC, Art-Net, plugins.
 
-© Fedo-Soft — Fedo-StageLnk
+## Licencia
+
+MIT — ver [`LICENSE`](./LICENSE). © Fedo-Soft — Fedo-StageLnk (Federico Cruz, fedo~sound).
+
+Componentes de terceros (NAudio, Silk.NET, System.Management, runtime de .NET y FFmpeg externo):
+ver [`THIRD-PARTY.md`](./THIRD-PARTY.md).
+
+## Aviso legal
+
+- **Uso profesional.** Sistema pensado para operar espectáculos en vivo: probalo en tu sala antes
+  de usarlo en producción. Las releases son *framework-dependent* y necesitan el runtime de .NET 8
+  Desktop instalado en cada equipo.
+- **FFmpeg no se incluye** y es opcional: es software de terceros y se rige por sus propias
+  licencias (ver `THIRD-PARTY.md`).
+- **Sin garantías.** El software se entrega «tal cual», sin garantía de ningún tipo (ver
+  `LICENSE`); la operación de un show en vivo es responsabilidad de quien lo opera.
