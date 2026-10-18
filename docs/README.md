@@ -60,20 +60,19 @@ directamente desde la URL en vez de bloquear el show.
 
 ## Arquitectura
 
-```
-                Ethernet
+Diagrama interactivo de la arquitectura —cabina (servidor) y máquina de reproducción
+(cliente) sobre la LAN del venue—, con la fuente de código de cada componente:
 
-   FEDO-STAGELNK SERVER (PC operador / cabina)
-     Biblioteca · Cue List · Sincronización · Administración
-        |                       |
-        +--------+--------------+
-                 |
-        Cliente 1               Cliente 2
-      (Proyector)            (Pantalla LED)
-          | HDMI                  | HDMI
-          |                       |
-       Pantalla               Pantalla
-```
+<a href="arquitectura.html">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="arquitectura-dark.png">
+    <img src="arquitectura.png" alt="Diagrama de arquitectura de Fedo-StageLnk: panel de operador, StageLnkServer con biblioteca y cue list, canales TCP 9001 / UDP 9002 / HTTP 9003, y el cliente con sincronización, almacén local y motor híbrido hacia la pantalla">
+  </picture>
+</a>
+
+> [Diagrama interactivo](arquitectura.html) (zoom, búsqueda, temas claro/oscuro y fuentes
+> por nodo) · [PNG claro](arquitectura.png) · [PNG oscuro](arquitectura-dark.png) ·
+> fuente editable: [`arquitectura.fuente.json`](arquitectura.fuente.json).
 
 - **TCP 9001** — conexión, manifiesto y confirmaciones de sincronización (frame: 4 bytes longitud + JSON).
 - **UDP 9002** — comandos en vivo, heartbeat y telemetría (datagrama JSON).

@@ -127,16 +127,20 @@ del venue: el operador arma la biblioteca y la cue list, el servidor difunde el 
 **TCP 9001**, el cliente descarga lo que le falta por **HTTP 9003** y reporta telemetría por
 **UDP 9002**.
 
-<a href="docs/arquitectura.html">
+<a href="https://fedecruz1981.github.io/fedo-stagelnk/arquitectura.html">
   <picture>
     <source media="(prefers-color-scheme: dark)" srcset="docs/arquitectura-dark.png">
     <img src="docs/arquitectura.png" alt="Diagrama de arquitectura de Fedo-StageLnk: panel de operador, StageLnkServer con biblioteca y cue list, canales TCP 9001 / UDP 9002 / HTTP 9003, y el cliente con sincronización, almacén local y motor híbrido hacia la pantalla">
   </picture>
 </a>
 
-> Diagrama interactivo (zoom, búsqueda, temas claro/oscuro y fuentes por nodo):
-> [docs/arquitectura.html](docs/arquitectura.html). Fuente editable del diagrama:
+> [Diagrama interactivo](https://fedecruz1981.github.io/fedo-stagelnk/arquitectura.html) (zoom,
+> búsqueda, temas claro/oscuro y fuentes por nodo) · [PNG claro](docs/arquitectura.png) ·
+> [PNG oscuro](docs/arquitectura-dark.png) · fuente editable:
 > [`docs/arquitectura.fuente.json`](docs/arquitectura.fuente.json).
+>
+> El sitio del proyecto se publica con GitHub Pages:
+> https://fedecruz1981.github.io/fedo-stagelnk/
 
 - **TCP 9001** — conexión, manifiesto y confirmaciones de sincronización (frame: 4 bytes longitud + JSON).
 - **UDP 9002** — comandos en vivo, heartbeat y telemetría (datagrama JSON).
